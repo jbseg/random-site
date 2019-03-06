@@ -1,39 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import fetch from 'isomorphic-fetch';
+import RandomWidget from './randomwidget.jsx';
 
 
 class RandomPannel extends React.Component {
   /* 
-  Display two random widgets and a random message
+  Display a list of random words and a button to generate new random words. 
   */
 
   constructor(props) {
     // Initialize immutable properties and mutable state
     super(props);
-    // TODO 1: initialize component state
-
+    this.state = { message: "" };
     // This binding is necessary to make `this` work in the callback
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    // TODO 2: Call REST API to get a random message and update state
-    // check out:
-    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    // Call REST API to get a random word
+    fetch(this.props.url, { credentials: 'same-origin' })
+      .then((response) => {
+        if (!response.ok) throw Error(response.statusText);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.random_message);
+        this.setState({
+          message: data.random_message
+        });
+      })
+      .catch(error => console.log(error)); // eslint-disable-line no-console
   }
 
 
   render() {
-    // TODO 3: Render two random widgets and the random message from the state
-    // check out:
+    // Render button and word list
     return (
-      <p>IMPLEMENT ME</p>
+      <div>
+      <div>
+        <h1>{this.state.message}</h1>
+      </div>
+      <ul>
+      <li><RandomWidget url="/api/v1/random/"/></li>
+      <li><RandomWidget url="/api/v1/random/"/></li>
+      </ul>
+      </div>
     );
   }
 }
 
-RandomWidget.propTypes = {
+RandomPannel.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
