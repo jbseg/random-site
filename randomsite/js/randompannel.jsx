@@ -5,8 +5,8 @@ import RandomWidget from './randomwidget.jsx';
 
 
 class RandomPannel extends React.Component {
-  /* 
-  Display a list of random words and a button to generate new random words. 
+  /*
+  Display a list of random words and a button to generate new random words.
   */
 
   constructor(props) {
@@ -41,7 +41,6 @@ class RandomPannel extends React.Component {
         <h1>{this.state.message}</h1>
       </div>
       <ul>
-      <li><RandomWidget url="/api/v1/random/"/></li>
       <li><RandomWidget url="/api/v1/random/"/></li>
       </ul>
       </div>
