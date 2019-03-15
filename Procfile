@@ -1,1 +1,1 @@
-web: gunicorn randomsite:randomsite
+web: gunicorn random-site:randomsite
